@@ -4,6 +4,7 @@
 #include <tice.h>
 #include <graphx.h>
 #include <keypadc.h>
+#include <fileioc.h>
 
 #ifndef uint24_t
 typedef unsigned int uint24_t;
@@ -20,6 +21,7 @@ typedef struct
 
 typedef struct
 {
+    uint16_t testbytes;
     uint16_t length;
     keyword_t words[KEYWORDSLENGTH];
 } keywords_t;
@@ -35,25 +37,30 @@ typedef struct
 
 #define LIVES 7
 uint8_t lostlives;
-uint8_t tries;
 bool revealed[WORDLENGTH];
 keywords_t *kwds;
 uint8_t word;
+uint8_t letter;
+#define MAXLETTERS 8
 bool missed[26];
 bool matched[26];
 uint8_t hints = 0;
+uint8_t cheat;
+#define CHEATED 5
 const char chars[] = "           WRMH " // 0x
                      "   VQLG   ZUPKFC" // 1x
                      "  YTOJEB  XSNIDA" // 2x
     ;
 char strbuf[100];
 
+char packs[10][9];
+
 void draw_Noose()
 {
+    gfx_SetColor(0);
     gfx_SetTextFGColor(0);
     gfx_Rectangle_NoClip(2, 2, LCD_WIDTH - 4, 14);
     gfx_PrintStringXY("Hangman game by David [mode]=quit [clear]=new", 5, 5);
-    gfx_SetColor(0);
     gfx_FillRectangle_NoClip(10, 220, 100, 5);
     gfx_FillRectangle_NoClip(32, 30, 5, 190);
     gfx_FillRectangle_NoClip(32, 30, 50, 5);
@@ -65,7 +72,9 @@ void draw_Noose()
 void draw_Hangman(uint8_t xo = 0, uint8_t yo = 0)
 {
     gfx_SetColor(255);
-    gfx_FillRectangle_NoClip(300, 18, 20, 8);
+    uint8_t tmp = gfx_SetTransparentColor(0);
+    gfx_FillRectangle_NoClip(240, 18, 80, 8);
+    gfx_SetTransparentColor(tmp);
     gfx_SetTextFGColor(0);
     sprintf(strbuf, "Hints: %u", hints);
     gfx_PrintStringXY(strbuf, 240, 18);
@@ -133,7 +142,18 @@ void draw_Word(uint8_t color = 0)
         if (revealed[i])
             chr = gfx_GetSpriteChar(kw.word[i]);
         else
-            chr = gfx_GetSpriteChar('_');
+        {
+            if (letter == MAXLETTERS)
+            {
+                gfx_SetTextFGColor(222);
+                chr = gfx_GetSpriteChar(kw.word[i]);
+                gfx_SetTextFGColor(color);
+            }
+            else
+            {
+                chr = gfx_GetSpriteChar('_');
+            }
+        }
         gfx_ScaledSprite_NoClip(chr, x, y, 2, 2);
     }
 }
@@ -146,11 +166,13 @@ void entered(char c)
         missed[c - 'A'] = true;
         lostlives++;
     }
-    while (ptr != NULL)
+    for (uint8_t i = 0; i < kwds->words[word].length; i++)
     {
-        matched[c - 'A'] = true;
-        revealed[ptr - kwds->words[word].word] = true;
-        ptr = strchr(ptr + 1, c);
+        if (kwds->words[word].word[i] == c)
+        {
+            matched[c - 'A'] = true;
+            revealed[i] = true;
+        }
     }
 }
 
@@ -178,8 +200,22 @@ void iwon()
 
 int main()
 {
-    var_t *keywords = os_GetAppVarData("HNGMNWRD", NULL);
-    if (keywords == NULL)
+    char *name;
+    uint8_t *search_pos = NULL;
+    uint8_t pack = 0;
+    while ((name = ti_Detect((void **)&search_pos, NULL)) != NULL)
+    {
+        int archived = 1;
+        var_t *v = os_GetAppVarData(name, &archived);
+        if (!archived || !v->size)
+            continue;
+        uint16_t c = *(uint16_t *)v->data;
+        if (c != 12345)
+            continue;
+        strcpy(packs[pack++], name);
+    }
+
+    if (pack == 0)
     {
         os_ClrHome();
         os_PutStrFull("You have not sent the     "
@@ -190,28 +226,69 @@ int main()
             delay(10);
         return 1;
     }
-    kwds = (keywords_t *)keywords->data;
 
     srandom(rtc_Time());
     gfx_Begin();
     gfx_SetTransparentColor(255);
-    gfx_SetTextBGColor(255);
+
+    var_t *keywords;
+    if (pack == 1)
+    {
+        keywords = os_GetAppVarData("HNGMNWRD", NULL);
+    }
+    else
+    {
+        gfx_PrintStringXY("Select pack:", 0, 0);
+        gfx_SetTextFGColor(0);
+        for (uint8_t p = 0; p < pack; p++)
+        {
+            gfx_PrintStringXY(packs[p], 16, 10 * (p + 1));
+        }
+        uint8_t selected = 0;
+        sk_key_t key = 0;
+        gfx_SetColor(255);
+        do
+        {
+            gfx_FillRectangle_NoClip(0, 10, 16, 230);
+            gfx_PrintStringXY(">", 0, 10 * (selected + 1));
+            while (!(key = os_GetCSC()))
+                delay(10);
+            switch (key)
+            {
+            case sk_Clear:
+                gfx_End();
+                return 0;
+            case sk_Up:
+                selected--;
+                if (selected == 255)
+                    selected = pack - 1;
+                break;
+            case sk_Down:
+                selected++;
+                if (selected == pack)
+                    selected = 0;
+                break;
+            }
+        } while (key != sk_Enter);
+        keywords = os_GetAppVarData(packs[selected], NULL);
+    }
+    kwds = (keywords_t *)keywords->data;
 
     bool contgame = true;
     while (contgame)
     {
         gfx_FillScreen(255);
         draw_Noose();
-        tries = 0;
         lostlives = 0;
+        letter = 0;
         word = randInt(0, kwds->length - 1);
         uint8_t wlen = kwds->words[word].length;
         char *wword = kwds->words[word].word;
         for (uint8_t i = 0; i < wlen; i++)
             revealed[i] = wword[i] < 'A' || wword[i] > 'Z';
-        memset(revealed, 0, sizeof(revealed));
         memset(missed, 0, sizeof(missed));
         memset(matched, 0, sizeof(missed));
+        hints = (cheat >= CHEATED) ? 255 : hints;
         bool cont = true;
         while (cont)
         {
@@ -225,9 +302,26 @@ int main()
             uint8_t givehint;
             switch (key)
             {
-            case sk_Window:
-                memset(revealed, 1, sizeof(revealed));
+#pragma region cheatttt
+            case sk_0:
+                if (cheat == 0 || cheat == 2 || cheat == 3)
+                    cheat++;
+                else
+                    cheat = 0;
                 break;
+            case sk_DecPnt:
+                if (cheat == 1)
+                    cheat++;
+                else
+                    cheat = 0;
+                break;
+            case sk_Vars:
+                if (cheat == 4)
+                    cheat++;
+                else
+                    cheat = 0;
+                break;
+#pragma endregion cheatttt
             case sk_Zoom:
                 lostlives = LIVES + 1;
                 draw_Hangman();
@@ -244,6 +338,7 @@ int main()
                 if (hints)
                 {
                     hints--;
+                    draw_Hangman();
                     do
                     {
                         givehint = randInt(0, wlen - 1);
@@ -251,8 +346,26 @@ int main()
                     entered(wword[givehint]);
                 }
                 break;
-            case sk_Math:
+#pragma region letters
+            case sk_Up:
+                if (letter == 0 || letter == 1)
+                    letter++;
+                break;
+            case sk_Down:
+                if (letter == 2 || letter == 3)
+                    letter++;
+                break;
+            case sk_Left:
+                if (letter == 4 || letter == 6)
+                    letter++;
+                break;
+            case sk_Right:
+                if (letter == 5 || letter == 7)
+                    letter++;
+                break;
+#pragma endregion letters
 #pragma region more letters
+            case sk_Math:
             case sk_Apps:
             case sk_Prgm:
             case sk_Recip:
@@ -282,7 +395,6 @@ int main()
                 if (missed[chars[key] - 'A'] || matched[chars[key] - 'A'])
                     break;
                 entered(chars[key]);
-                tries++;
                 break;
             }
             bool won = true;

@@ -15,12 +15,14 @@ typedef struct
 
 typedef struct
 {
+    uint16_t testbytes;
     uint16_t length;
     keyword_t words[KEYWORDSLENGTH];
 } keywords_t;
 
 char outbuf[25];
 char inbuf[WORDLENGTH + 1];
+const uint16_t test = 12345;
 
 int main()
 {
@@ -28,6 +30,7 @@ int main()
 
     ti_CloseAll();
     ti_var_t tvar = ti_Open("HNGMNWRD", "w");
+    ti_Write(&test, 2, 1, tvar);
     ti_Write(outbuf, 2, 1, tvar);
     uint16_t length = 0;
     os_PutStrFull("Please enter words, any   "
