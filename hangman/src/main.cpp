@@ -350,18 +350,26 @@ int main()
             case sk_Up:
                 if (letter == 0 || letter == 1)
                     letter++;
+                else
+                    letter = 0;
                 break;
             case sk_Down:
                 if (letter == 2 || letter == 3)
                     letter++;
+                else
+                    letter = 0;
                 break;
             case sk_Left:
                 if (letter == 4 || letter == 6)
                     letter++;
+                else
+                    letter = 0;
                 break;
             case sk_Right:
                 if (letter == 5 || letter == 7)
                     letter++;
+                else
+                    letter = 0;
                 break;
 #pragma endregion letters
 #pragma region more letters
