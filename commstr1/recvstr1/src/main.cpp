@@ -51,17 +51,6 @@ int main()
     kb_EnableOnLatch();
 
     ti_CloseAll();
-    uint8_t *pos = NULL;
-    char *name = ti_DetectVar((void **)&pos, ti_Str1, TI_STRING_TYPE);
-    if (name != NULL)
-    {
-        os_PutStrFull("Str1 exists. This program will overwrite it.        Proceed? (Enter/Clear)");
-        do
-            kb_ScanGroup(6);
-        while (!kb_IsDown(kb_KeyClear) && !kb_IsDown(kb_KeyEnter));
-        if (kb_IsDown(kb_KeyClear))
-            return 0;
-    }
     ti_var_t slot = ti_OpenVar(ti_Str1, "w", TI_STRING_TYPE);
     if (!slot)
         return 1;
