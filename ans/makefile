@@ -1,5 +1,4 @@
 NAME := ANSWERS
-ICON := icon.png
 DESCRIPTION := Playing with Ans
 ARCHIVED := YES
 
