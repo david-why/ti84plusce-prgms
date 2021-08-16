@@ -4,6 +4,8 @@ They are used to send the `Str1` variable from one calculator to another.
 
 Before running either program, connect the two calculators with an USB cable.
 
+Warning: I have not tested these prorams with two calculators. Use at your own risk!
+
 ## sendstr1
 Run this program on the sender.
 When the program shows "Write finished, please disconnect", disconnect the USB cable and press <kbd>On</kbd>.
