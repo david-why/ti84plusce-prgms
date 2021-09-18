@@ -4,8 +4,11 @@
 #include <fileioc.h>
 #include <string.h>
 
+#include "gfx/gfx.h"
+
 char buffer[256];
 uint8_t mode = 0;
+bool quitprgm = false;
 
 void csstring(unsigned int y, uint8_t scale, const char *str, bool box = false)
 {
@@ -102,7 +105,7 @@ bool detectvar(const char *name)
 {
     ti_CloseAll();
     ti_var_t slot = ti_Open(name, "r+");
-    if (ti_GetSize(slot) == 0)
+    if (ti_GetSize(slot) == (uint16_t)(-1))
     {
         ti_Close(slot);
         ti_Delete(name);
@@ -136,18 +139,18 @@ void clearscr()
     gfx_FillScreen(255);
     gfx_Rectangle_NoClip(1, 1, LCD_WIDTH - 2, 12);
     const char *mainstr = "DnD tools by David";
-    const char *eeql = "[Enter]=%s [2nd]=save [Clear]=quit";
+    const char *eeql = "[Enter]=toggle [2nd]=save [Clear]=quit";
     const char *ladv = "[<-]=adv. [->]=disadv. [Enter]=roll [Clear]=quit";
     switch (mode)
     {
     case 0:
-        sprintf(buffer, eeql, "toggle");
+        sprintf(buffer, "%s", eeql);
         break;
     case 1:
-        sprintf(buffer, eeql, "toggle");
+        sprintf(buffer, "%s", eeql);
         break;
     case 2:
-        sprintf(buffer, eeql, "select");
+        sprintf(buffer, "[Enter]=select [2nd]=roll [Clear]=quit");
         break;
     case 3:
     case 4:
@@ -156,6 +159,9 @@ void clearscr()
     case 5:
         sprintf(buffer, "[y=]=YES [graph]=NO");
         break;
+    case 254:
+        sprintf(buffer, "[Enter]/[2nd]=roll Any=quit");
+        break;
     default:
         sprintf(buffer, "%s", mainstr);
         break;
@@ -163,11 +169,43 @@ void clearscr()
     gfx_PrintStringXY(buffer, 3, 3);
 }
 
+sk_key_t doroll(int num, int sides, int mod, bool adv = false, bool disadv = false)
+{
+    int r = roll(num, sides, mod, adv, disadv);
+    clearscr();
+    if (adv)
+        csstring(50, 2, "[A] You rolled:");
+    else if (disadv)
+        csstring(50, 2, "[D] You rolled:");
+    else
+        csstring(50, 2, "You rolled:");
+    if (mod < 0)
+        sprintf(buffer, "%dd%d-%d", num, sides, -mod);
+    else
+        sprintf(buffer, "%dd%d+%d", num, sides, mod);
+    csstring(80, 1, buffer);
+    if (mod < 0)
+        sprintf(buffer, "%d-%d=%d", r - mod, -mod, r);
+    else
+        sprintf(buffer, "%d+%d=%d", r - mod, mod, r);
+    gfx_SetTextFGColor(224);
+    csstring(100, 2, buffer, true);
+    gfx_SetTextFGColor(0);
+    gfx_SwapDraw();
+
+    sk_key_t key;
+    while (!(key = os_GetCSC()))
+        delay(10);
+    return key;
+}
+
 const char *menu_choices[] = {"Set character stats", "Set skills", "Roll saving throw", "Roll ability check", "Roll dice", "DELETE CHARACTER"};
 constexpr uint8_t n_menu_choices = sizeof(menu_choices) / sizeof(menu_choices[0]);
 
 int8_t menu()
 {
+    if (quitprgm)
+        return -1;
     sk_key_t key;
     uint8_t choice = mode;
     mode = -1;
@@ -177,6 +215,7 @@ int8_t menu()
         csstring(50, 2, "D&D Tools");
         for (uint8_t i = 0; i < n_menu_choices; i++)
             csstring(85 + i * 20, 1, menu_choices[i], i == choice);
+        gfx_Sprite(dnd_icon, 240, 38);
         gfx_SwapDraw();
 
         while (!(key = os_GetCSC()))
@@ -243,6 +282,7 @@ void setstats(bool read = true)
         if (key == sk_Clear)
         {
             free(c);
+            quitprgm = !read;
             return;
         }
         switch (key)
@@ -281,6 +321,7 @@ void setstats(bool read = true)
 
     save_character(c);
     free(c);
+    return;
 }
 const char *short_names[] = {"STR", "DEX", "CON", "INT", "WIS", "CHA"};
 #define n_short_names (6)
@@ -405,21 +446,10 @@ void savethrow()
         mod += c->s.prof_bonus;
 
     sk_key_t key = sk_Enter;
+    mode = -2;
     while (key == sk_Enter || key == sk_2nd)
-    {
-        int r = roll(1, 20, mod, adv, disadv);
-        clearscr();
-        csstring(50, 2, "You rolled:");
-        gfx_SetTextFGColor(224);
-        sprintf(buffer, "%d+%d=%d", r - mod, mod, r);
-        csstring(100, 1, buffer, true);
-        gfx_SetTextFGColor(0);
-        gfx_SwapDraw();
-
-        while (!(key = os_GetCSC()))
-            delay(10);
-    }
-
+        key = doroll(1, 20, mod, adv, disadv);
+    mode = 2;
     free(c);
 }
 
@@ -567,20 +597,10 @@ void skillthrow()
         mod += c->s.prof_bonus;
     free(c);
     sk_key_t key = sk_Enter;
+    mode = -2;
     while (key == sk_Enter || key == sk_2nd)
-    {
-        int r = roll(1, 20, mod, adv, disadv);
-        clearscr();
-        csstring(50, 2, "You rolled:");
-        gfx_SetTextFGColor(224);
-        sprintf(buffer, "%d+%d=%d", r - mod, mod, r);
-        csstring(100, 1, buffer, true);
-        gfx_SetTextFGColor(0);
-        gfx_SwapDraw();
-
-        while (!(key = os_GetCSC()))
-            delay(10);
-    }
+        key = doroll(1, 20, mod, adv, disadv);
+    mode = 3;
 }
 
 const char *roll_names[] = {"Number", "Sides", "Modifier"};
@@ -598,18 +618,18 @@ void rollgui()
         {
             clearscr();
             if (adv)
-                csstring(20, 2, "[A] Roll dice");
+                csstring(40, 2, "[A] Roll dice");
             else if (disadv)
-                csstring(20, 2, "[D] Roll dice");
+                csstring(40, 2, "[D] Roll dice");
             else
-                csstring(20, 2, "[N] Roll dice");
+                csstring(40, 2, "[N] Roll dice");
             for (int i = 0; i < n_roll_names; i++)
             {
-                gfx_PrintStringXY(roll_names[i], 80, 50 + 30 * i);
+                gfx_PrintStringXY(roll_names[i], 80, 70 + 30 * i);
                 if (choice == i)
                     gfx_SetColor(224);
-                gfx_Rectangle_NoClip(150, 47 + 30 * i, 100, 14);
-                gfx_SetTextXY(153, 50 + 30 * i);
+                gfx_Rectangle_NoClip(150, 67 + 30 * i, 100, 14);
+                gfx_SetTextXY(153, 70 + 30 * i);
                 gfx_PrintInt(values[i], 1);
                 gfx_SetColor(0);
             }
@@ -665,23 +685,10 @@ void rollgui()
         }
 
         sk_key_t key = sk_Enter;
+        mode = -2;
         while (key == sk_Enter || key == sk_2nd)
-        {
-            int r = roll(values[0], values[1], values[2], adv, disadv);
-            clearscr();
-            csstring(50, 2, "You rolled:");
-            gfx_SetTextFGColor(224);
-            if (values[2] < 0)
-                sprintf(buffer, "%d-%d=%d", r - values[2], -values[2], r);
-            else
-                sprintf(buffer, "%d+%d=%d", r - values[2], values[2], r);
-            csstring(100, 1, buffer, true);
-            gfx_SetTextFGColor(0);
-            gfx_SwapDraw();
-
-            while (!(key = os_GetCSC()))
-                delay(10);
-        }
+            key = doroll(values[0], values[1], values[2], adv, disadv);
+        mode = 4;
     }
 }
 
@@ -715,8 +722,7 @@ void deletechrtr()
         gfx_SetTextFGColor(0);
         gfx_SwapDraw();
 
-        while (!os_GetCSC())
-            delay(10);
+        delay(1000);
 
         mode = 0;
         setstats(false);

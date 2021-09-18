@@ -1,0 +1,10 @@
+converts:
+  - name: icon
+    images:
+      - dnd_icon.png
+
+outputs:
+  - type: c
+    include-file: gfx.h
+    converts:
+      - icon
