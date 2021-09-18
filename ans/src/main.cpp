@@ -165,20 +165,14 @@ void real_fact(real_t *var)
     gfx_ScaledTextXY("Fact(Ans):", 10, 10, 2, buf);
     gfx_BlitBuffer();
     real_t one = os_Int24ToReal(1);
-    real_t two = os_Int24ToReal(2);
-    real_t five_hundred_and_one = os_Int24ToReal(501);
+    real_t tomod = os_Int24ToReal(500);
     real_t val = *var;
     gfx_SetColor(255);
     unsigned int y = 30;
     real_t i = os_Int24ToReal(2);
-    uint8_t entered = 0;
-    for (; os_RealCompare(&i, &val) <= 0; i = os_RealAdd(&i, (entered == 1) ? (&one) : (&two)))
+    for (; os_RealCompare(&i, &val) <= 0; i = os_RealAdd(&i, &one))
     {
-        if (entered == 0)
-            entered = 1;
-        else if (entered == 1)
-            entered = 2;
-        real_t mod = os_RealMod(&i, &five_hundred_and_one);
+        real_t mod = os_RealMod(&i, &tomod);
         if (os_RealCompare(&mod, &zero) == 0)
         {
             gfx_FillRectangle_NoClip(200, 10, 120, 8);

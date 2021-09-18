@@ -1,5 +1,5 @@
 NAME := ANSWERS
-DESCRIPTION := Playing with Ans
+DESCRIPTION := "Playing with Ans"
 ARCHIVED := YES
 
 HAS_PRINTF := NO
