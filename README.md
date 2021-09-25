@@ -5,6 +5,8 @@ To run these programs, you need the CE C 'Standard' Libraries for your calculato
 
 You can find them [here](https://github.com/CE-Programming/libraries/releases/latest).
 
+Special thanks to @mendsley for the wonderful library [tinystl](https://github.com/mendsley/tinystl)!
+
 ## Compilation
 To compile these programs, you need the CE C Toolchain installed on your computer.
 
