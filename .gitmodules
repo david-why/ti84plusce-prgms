@@ -1,0 +1,3 @@
+[submodule "tinystl"]
+	path = tinystl
+	url = https://github.com/mendsley/tinystl
