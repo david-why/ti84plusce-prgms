@@ -2,8 +2,8 @@
 # Makefile Options
 # ----------------------------
 
-NAME := ATSTRVAR
-DESCRIPTION := "Test Str1"
+NAME := ATVAR
+DESCRIPTION := "Test some variable stuff"
 COMPRESSED := NO
 ARCHIVED := NO
 

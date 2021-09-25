@@ -1,50 +1,56 @@
 #include <tice.h>
 #include <fileioc.h>
 #include <string.h>
+#include <stdio.h>
 
-void newline()
-{
-    outchar('\n');
-}
+char buffer[100];
 
 int main()
 {
-    uint8_t ans_type;
+    void *position = NULL;
+    char *name;
 
     os_ClrHome();
-
-    if (!os_GetAnsData(&ans_type))
-        return 1;
-
-    string_t *str;
-    uint16_t len;
-    char *data;
-    switch (ans_type)
+    while ((name = ti_DetectVar(&position, NULL, TI_PRGM_TYPE)))
     {
-    case TI_STRING_TYPE:
-        os_PutStrFull("ANS is a string");
-        newline();
-        str = (string_t *)os_GetAnsData(&ans_type);
-        os_PutStrFull("DATA ");
-        len = str->len;
-        data = (char *)malloc(len + 1);
-        strncpy(data, str->data, len);
-        data[len] = '\0';
-        os_PutStrFull(data);
-        newline();
-        break;
-    case TI_REAL_TYPE:
-        os_PutStrFull("ANS is a real");
-        newline();
-        break;
-    default:
-        char s[100];
-        sprintf(s, "ANS is of type %d", ans_type);
-        os_PutStrFull(s);
-        newline();
+        if (!strcmp(name, "A"))
+        {
+            os_PutStrFull("YES");
+            ti_CloseAll();
+            ti_var_t slot = ti_OpenVar(name, "r", TI_PRGM_TYPE);
+            if (slot == 0)
+                return 1;
+            uint16_t size = ti_GetSize(slot);
+            sprintf(buffer, "%u", size);
+            os_PutStrFull(buffer);
+            ti_Read(buffer, size, 1, slot);
+            ti_Close(slot);
+            os_ClrHome();
+            for (uint16_t i = 0; i < size; i++)
+            {
+                uint8_t tok = buffer[i];
+                switch (tok)
+                {
+                case t2ByteTok:
+                    break;
+                case tSqrt:
+                    os_PutStrFull("\x10(");
+                    break;
+                case tProg:
+                    os_PutStrFull("prgm");
+                    break;
+                case tAsm:
+                    os_PutStrFull("Asm(");
+                    break;
+                default:
+                    os_PutStrFull((char[]){(char)tok, 0});
+                    break;
+                }
+            }
+        }
     }
 
     while (!os_GetCSC())
-        ;
+        delay(10);
     return 0;
 }
