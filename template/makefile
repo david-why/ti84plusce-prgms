@@ -3,9 +3,9 @@
 # ----------------------------
 
 NAME := name
-DESCRIPTION := "[Description]"
+DESCRIPTION := "Description"
 COMPRESSED := NO
-ARCHIVED := NO
+ARCHIVED := YES
 
 HAS_PRINTF := NO
 
