@@ -4,15 +4,6 @@
 #include <string.h>
 #include <fileioc.h>
 
-/**
- * Output a newline to the homescreen.
- * I have NO IDEA why this isn't in the toolchain.
- */
-void newline()
-{
-    outchar('\n');
-}
-
 int main()
 {
     char *str = (char *)malloc(100 * sizeof(char)),
@@ -31,7 +22,7 @@ int main()
         a = 1, b = 0, c = 0;
         strcpy(last, str);
         os_GetStringInput((char *)">", str, 100);
-        newline();
+        os_NewLine();
         if (!strcmp(str, "/"))
         {
             break;
@@ -125,7 +116,7 @@ int main()
         sprintf(out, "%d", n);
         os_PutStrFull(out);
 
-        newline();
+        os_NewLine();
     }
     free(str);
     free(last);

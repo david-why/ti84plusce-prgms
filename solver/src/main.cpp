@@ -58,16 +58,16 @@ int main()
         real_t r = os_FloatToReal(ans);
         os_RealToStr(buffer, &r, 127, 1, -1);
         os_PutStrLine("The answer is:");
-        outchar('\n');
-        outchar('\n');
+        os_NewLine();
+        os_NewLine();
         os_PutStrLine(buffer);
         os_PutStrLine(" (");
         os_PutStrLine(unit_type_names[solver->output]);
         os_PutStrLine(")");
-        outchar('\n');
-        outchar('\n');
+        os_NewLine();
+        os_NewLine();
         os_PutStrLine("Brought to you by solver:");
-        outchar('\n');
+        os_NewLine();
         os_PutStrLine(solver->name);
         while (!os_GetCSC())
             ;

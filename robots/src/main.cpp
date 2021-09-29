@@ -217,7 +217,7 @@ bool setHighscore(bool return_to_gfx = true, bool force = false, bool interactiv
         gfx_End();
         os_ClrHome();
         os_PutStrFull("Please enter your name (14 chars):");
-        outchar('\n');
+        os_NewLine();
         os_GetStringInput("", out, 15);
         if (strlen(out) > 1)
         {
@@ -436,10 +436,10 @@ int main()
             sk_key_t key;
             os_ClrHome();
             os_PutStrFull("This is THE robots game.  You want to dodge robots  that try to kill you and  destroy them.");
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("Every time you destroy a  robot, you gain a point.  Your highscore will be    saved.");
-            outchar('\n');
-            outchar('\n');
+            os_NewLine();
+            os_NewLine();
             os_PutStrFull("(Any key:Cont,Clear:Quit)");
             while (!(key = os_GetCSC()))
                 ;
@@ -447,23 +447,23 @@ int main()
             {
                 return 0;
             }
-            outchar('\n');
+            os_NewLine();
             updateHighscore();
             os_PutStrFull("The current highscore is  held by");
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull(highscore.name);
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("who holds the score of");
-            outchar('\n');
+            os_NewLine();
             sprintf(out, "%d", highscore.score);
             os_PutStrFull(out);
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("points.");
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("Try your best to beat thatscore!");
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("Created by David");
-            outchar('\n');
+            os_NewLine();
             os_PutStrFull("(Any key:Quit)");
             while (!(key = os_GetCSC()))
                 ;
@@ -473,17 +473,17 @@ int main()
                     ;
                 if (key != sk_Math)
                     return 0;
-                outchar('\n');
+                os_NewLine();
                 os_PutStrFull("Hey! How did you figure   THAT out??\?!");
-                outchar('\n');
-                outchar('\n');
-                outchar('\n');
+                os_NewLine();
+                os_NewLine();
+                os_NewLine();
                 os_PutStrFull("Anyways, happy playing!");
-                outchar('\n');
-                outchar('\n');
-                outchar('\n');
-                outchar('\n');
-                outchar('\n');
+                os_NewLine();
+                os_NewLine();
+                os_NewLine();
+                os_NewLine();
+                os_NewLine();
                 os_PutStrFull("(Any key:Really Quit)");
                 while (!(key = os_GetCSC()))
                     ;
@@ -491,7 +491,7 @@ int main()
                 {
                     os_ClrHome();
                     os_PutStrFull("***CHEATING***");
-                    outchar('\n');
+                    os_NewLine();
                     os_PutStrFull("Enter score (int):");
                     os_GetStringInput("", out, 25);
                     score = atoi(out);
