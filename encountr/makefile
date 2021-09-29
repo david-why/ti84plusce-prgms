@@ -11,7 +11,7 @@ ARCHIVED := YES
 HAS_PRINTF := NO
 
 CFLAGS := -Wall -Wextra -Oz
-CXXFLAGS := -Wall -Wextra -Oz
+CXXFLAGS := -Wall -Wextra -Oz -I../tinystl/include
 
 # ----------------------------
 
