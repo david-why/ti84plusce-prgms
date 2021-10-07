@@ -3,7 +3,7 @@
 # ----------------------------
 
 NAME := PHB
-DESCRIPTION := "Description"
+DESCRIPTION := "Portable Player's Handbook"
 COMPRESSED := NO
 ARCHIVED := YES
 
