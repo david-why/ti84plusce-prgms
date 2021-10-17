@@ -2,7 +2,16 @@
 #include <graphx.h>
 #include <string.h>
 
-int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = sk_Enter, sk_key_t quitkey = sk_Clear)
+int getinput(char *buffer,
+             unsigned int maxsize,
+             int x,
+             int y,
+             sk_key_t okkey = sk_Enter,
+             sk_key_t quitkey = sk_Mode,
+             const char *var_n = NULL,
+             const char *var_s = NULL,
+             const char *var_A = NULL,
+             const char *var_a = NULL)
 {
     if (maxsize-- < 2)
         return 0;
@@ -15,7 +24,7 @@ int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = 
     while (true)
     {
         gfx_BlitScreen();
-        gfx_FillRectangle(x, y, LCD_WIDTH, 8);
+        gfx_FillRectangle(x, y, LCD_WIDTH, LCD_HEIGHT);
         gfx_FillRectangle(0, 0, 16, 8);
         if (second)
         {
@@ -37,7 +46,7 @@ int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = 
         {
             gfx_PrintChar(buffer[i]);
             if (i && i % 35 == 0)
-                gfx_SetTextXY(x, y + i / 40 * 12);
+                gfx_SetTextXY(x, y + i / 35 * 12);
         }
         gfx_SwapDraw();
         while (!(key = os_GetCSC()))
@@ -90,6 +99,10 @@ int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = 
         };
         switch (key)
         {
+        case sk_Clear:
+            pos = 0;
+            buffer[0] = 0;
+            break;
         case sk_2nd:
             second = !second;
             break;
@@ -212,10 +225,25 @@ int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = 
             c('0', 0, ' ', ' ');
             break;
         case sk_DecPnt:
-            c('.', 'i', ':', ':');
+            c('.', 'i', ':', ';');
             break;
         case sk_Chs:
             c('_', 0, '?', '!');
+            break;
+        case sk_Yequ:
+            c(0, 0, '@', '#');
+            break;
+        case sk_Window:
+            c(0, 0, '$', '%');
+            break;
+        case sk_Zoom:
+            c(0, 0, '|', '\\');
+            break;
+        case sk_Trace:
+            c(0, 0, '<', '>');
+            break;
+        case sk_Vars:
+            c(1, 2, 3, 4);
             break;
         }
         auto v = [&pos, maxsize, buffer](const char *str, const char *repl)
@@ -231,5 +259,17 @@ int getinput(char *buffer, unsigned int maxsize, int x, int y, sk_key_t okkey = 
         v("_eq_", "=");
         v("_gt_", ">");
         v("_lt_", "<");
+        v("_and_", "&");
+        v("_exc_", "!");
+        v("_at_", "@");
+        v("_hash_", "#");
+        v("_money_", "$");
+        v("_pc_", "%");
+        v("_xor_", "^");
+
+        v("\1", var_n ? var_n : "");
+        v("\2", var_s ? var_s : "");
+        v("\3", var_A ? var_A : "");
+        v("\4", var_a ? var_a : "");
     }
 }

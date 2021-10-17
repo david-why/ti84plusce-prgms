@@ -82,7 +82,12 @@ void getqrinput()
     gfx_PrintStringXY("Enter text, <272 char:", 10, 10);
     gfx_SetTextScale(1, 1);
     gfx_SwapDraw();
-    int read = getinput(buffer, 272, 10, 50);
+    int read = getinput(buffer, 272, 10, 50, sk_Enter, sk_Mode, "https://", "http://", "mailto:", "WIFI:T:");
+    if (read < 0)
+    {
+        gfx_End();
+        exit(0);
+    }
     gfx_FillScreen(255);
     gfx_SetTextScale(2, 2);
     gfx_SetTextFGColor(224);
@@ -138,6 +143,11 @@ int main()
             {
                 getqrinput();
                 break;
+            }
+            if (key == sk_Clear)
+            {
+                gfx_End();
+                return 0;
             }
             int8_t val = toint(key);
             if (val == -1 || !s->codes[val].used)
