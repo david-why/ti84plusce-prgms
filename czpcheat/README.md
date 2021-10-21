@@ -1,0 +1,2 @@
+# czpcheat
+Cheat for Calcuzap!
