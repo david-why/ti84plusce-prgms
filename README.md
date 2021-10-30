@@ -16,5 +16,5 @@ After you have that installed, run `make` in one of the programs' directory.
 
 You should see the 8xp file in the `bin` directory, just transfer that to your calc with TI Connect CE or TiLP.
 
-## Liscense
+## License
 Umm... I have NO IDEA how this works. So do whatever you want with this code. I guess.
