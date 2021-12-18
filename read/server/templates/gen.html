@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>Generate TI-Book</title>
+</head>
+
+<body>
+    <h1>Generate TI-Book</h1>
+    <strong><p>Use this form to generate a TI-book with your book data built-in:</p></strong>
+    <form action="" method="post" enctype="multipart/form-data">
+        <input name="t" value="1" type="hidden" />
+        <label for="f1">Text file&nbsp;</label>
+        <input id="f1" name="f" type="file" />
+        <input type="submit" />
+    </form>
+    <strong><p>Use this form to generate part files which you can put into your FAT drive:</p></strong>
+    <form action="" method="post" enctype="multipart/form-data">
+        <input name="t" value="2" type="hidden" />
+        <table>
+            <tr>
+                <td><label for="f2">Text file</label></td>
+                <td><input id="f2" name="f" type="file" /></td>
+            </tr>
+            <tr>
+                <td><label for="n">Size, in bytes, of each part</label></td>
+                <td><input id="n" name="n" type="number" value="50000" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" /></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

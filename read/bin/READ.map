@@ -1,0 +1,165 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A89E            1Ch
+.init.libs       D1A89E D1A8F6            58h
+.libs            D1A8F6 D1A9A8            B2h
+.init.clock      D1A9A8 D1A9C3            1Bh
+.init.reruncheck D1A9C3 D1A9C3             0h
+.init            D1A9C3 D1A9EF            2Ch
+.fini            D1A9EF D1AA23            34h
+.text            D1AA23 D1BABF          109Ch
+.data            D1BABF D1BAC9             Ah
+.rodata          D1BAC9 D1BC9E           1D5h
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D05E12 D13FD8    B4Ch
+.header          D1A87F D1A882             3h
+
+Label                                      Value
+----------------------------------------   ------
+___low_bss                               = D052C6
+___len_bss                               = 000B4C
+___heaptop                               = D13FD8
+___heapbot                               = D05E12
+___libs                                  = D1A8F6
+___init_array_count                      = 000000
+___ctors_count                           = 000000
+___dtors_count                           = 000000
+___fini_array_count                      = 000000
+__stack                                  = D1A87E
+_atomic_load_increasing_32               = D1AA23
+_delay                                   = D1AA48
+_os_DisableHomeTextBuffer                = D1AA72
+_os_EnableHomeTextBuffer                 = D1AA84
+___sleep_common.3                        = D1AA98
+_os_ThrowError                           = 021C80
+_os_PutStrFull                           = 021D2C
+_os_GetCSC                               = 021D3C
+_os_ClrLCD                               = 02080C
+_os_HomeUp                               = 020828
+_os_DrawStatusBar                        = 021A3C
+__bdivu                                  = D1AAB1
+_free                                    = D1AAC7
+_malloc                                  = D1AB76
+__alloc_base                             = D052C6
+_clock                                   = D1AC15
+__frameset                               = D1AC20
+__frameset0                              = D1AC2E
+_memset                                  = D1AC39
+_sbrk                                    = D1AC50
+__sbrkbase                               = D1BABF
+__iand                                   = 000134
+__imulu                                  = 000158
+__irems                                  = 00016C
+__ishl                                   = 000174
+__ladd                                   = 00019C
+__land                                   = 0001A4
+__lcmpu                                  = 0001AC
+__lcmpzero                               = 0001B0
+__lmulu                                  = 0001CC
+__lshru                                  = 0001EC
+__sdivu                                  = 00020C
+__setflag                                = 000218
+__smulu                                  = 000228
+__sshl                                   = 000240
+_memcpy                                  = 0000A4
+___sprintf                               = 0000BC
+_strcasecmp                              = 021E3C
+_strcpy                                  = 0000CC
+_strrchr                                 = 0000E8
+.missingappvar                           = D1BAC9
+.libloadname                             = D1BACE
+.libloadnamelen                          = 000007
+.webaddress                              = D1BAD6
+___init_clock                            = D1A9A8
+__start                                  = D1A9C3
+___exithl                                = D1A9EF
+skip._exit                               = D1A9EF
+skip.__Exit                              = D1A9EF
+skip._abort                              = D1A9EF
+_exit.sp                                 = D1A9F0
+_exit.flash_wait_states                  = D1A9FA
+__Z14get_symbol_rowth                    = D1AC6E
+__Z8get_charmhh                          = D1ACB8
+__Z7n_booksv                             = D1AD48
+__ZL14handleUsbEvent9usb_eventPvP6global = D1AF95
+LJTI10_0                                 = D1BAEB
+__Z9get_namesv                           = D1AFFF
+__Z9init_bookPKc                         = D1B19D
+__Z11deinit_bookv                        = D1B2AC
+__Z7nummenuPPKct                         = D1B2C4
+LJTI14_0                                 = D1BAF7
+__Z7key2inth                             = D1B503
+__Z4drawtth                              = D1B52B
+__Z12updateschemev                       = D1B600
+_main                                    = D1B643
+LJTI18_0                                 = D1BB66
+_books                                   = D052CC
+_global                                  = D052D0
+_buf                                     = D056D3
+_partitions                              = D058D3
+_fat                                     = D05923
+_entry                                   = D05D34
+_file                                    = D05D46
+_names                                   = D05D86
+_data                                    = D05D89
+L_.str                                   = D1BBD5
+L_.str.1                                 = D1BBE4
+L_.str.2                                 = D1BBF6
+L_.str.3                                 = D1BC09
+L_.str.4                                 = D1BC20
+L_.str.5                                 = D1BC34
+L_.str.6                                 = D1BC46
+L_.str.7                                 = D1BC48
+L_.str.8                                 = D1BC4C
+L_.str.9                                 = D1BC5F
+L_.str.10                                = D1BC6F
+L_.str.11                                = D1BC71
+L_.str.12                                = D1BC7A
+_buffer                                  = D05D8C
+_spr                                     = D1BAC2
+_fgcolors                                = D1BAC5
+_bgcolors                                = D1BAC7
+_scheme                                  = D05E0E
+_height                                  = D05E0F
+_page                                    = D05E10
+_gt                                      = D05E11
+L_.str.13                                = D1BC7C
+L_.str.14                                = D1BC84
+L_switch.table._Z7key2inth               = D1BC8B
+_#msd_Open                               = D1A901
+_#msd_Close                              = D1A905
+_#msd_Info                               = D1A909
+_#msd_Read                               = D1A90D
+_#msd_Write                              = D1A911
+_#msd_FindPartitions                     = D1A915
+_#gfx_Begin                              = D1A922
+_#gfx_End                                = D1A926
+_#gfx_SetColor                           = D1A92A
+_#gfx_FillScreen                         = D1A92E
+_#gfx_SetDraw                            = D1A932
+_#gfx_SwapDraw                           = D1A936
+_#gfx_Blit                               = D1A93A
+_#gfx_PrintChar                          = D1A93E
+_#gfx_PrintUInt                          = D1A942
+_#gfx_PrintString                        = D1A946
+_#gfx_PrintStringXY                      = D1A94A
+_#gfx_SetTextXY                          = D1A94E
+_#gfx_SetTextBGColor                     = D1A952
+_#gfx_SetTextFGColor                     = D1A956
+_#gfx_SetTextTransparentColor            = D1A95A
+_#gfx_GetTextX                           = D1A95E
+_#gfx_FillRectangle_NoClip               = D1A962
+_#gfx_Sprite                             = D1A966
+_#fat_Init                               = D1A975
+_#fat_Deinit                             = D1A979
+_#fat_DirList                            = D1A97D
+_#fat_Open                               = D1A981
+_#fat_GetSize                            = D1A985
+_#fat_Read                               = D1A989
+_#usb_Init                               = D1A998
+_#usb_Cleanup                            = D1A99C
+_#usb_WaitForInterrupt                   = D1A9A0
+_#usb_ResetDevice                        = D1A9A4
