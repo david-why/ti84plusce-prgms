@@ -1,0 +1,22 @@
+palettes:
+  - name: palette
+    speed: 1
+    images: automatic
+    fixed-entries:
+      - color: {index: 255, r: 255, g: 255, b: 255}
+      - color: {index: 254, r: 16, g: 65, b: 92}
+
+converts:
+  - name: myimages
+    palette: palette
+    images:
+      - update_calc_l.png
+      - update_calc_r.png
+
+outputs:
+  - type: c
+    include-file: gfx.h
+    converts:
+      - myimages
+    palettes:
+      - palette
