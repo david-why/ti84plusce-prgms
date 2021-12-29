@@ -12,5 +12,5 @@ cd "$tmpdir"
 make
 # shellcheck disable=SC2164
 cd "$cwd"
-cp "$tmpdir"/bin/*.8xp bin
+cp "$tmpdir"/bin/* bin
 rm -rf "$tmpdir"
