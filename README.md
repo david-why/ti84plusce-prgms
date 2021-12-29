@@ -1,5 +1,5 @@
 # ti84plusce-prgms
-Some of my ASM creations for the TI-84+ CE.
+Some of my C/ASM creations for the TI-84+ CE.
 
 To run these programs, you need the CE C 'Standard' Libraries for your calculator.
 
@@ -17,4 +17,4 @@ After you have that installed, run `make` in one of the programs' directory.
 You should see the 8xp file in the `bin` directory, just transfer that to your calc with TI Connect CE or TiLP.
 
 ## License
-Umm... I have NO IDEA how this works. So do whatever you want with this code. I guess.
+I don't care what you do with my code. Print it on paper and burn it? Sure.
