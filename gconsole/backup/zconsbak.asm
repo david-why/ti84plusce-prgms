@@ -24,7 +24,7 @@ include 'include/app.inc'
 
 ; ------------------------------------------------
 ; start of actual application code
-	app_start 'ZCONSBAK', '(C) 2021 jollyroger182', '0.0.0.3', 3
+	app_start 'ZCONSBAK', '(C) 2021 jollyroger182', '1.0.0.3', 3
 	
 	call	ti.ClrScrnFull
 	call	ti.HomeUp
