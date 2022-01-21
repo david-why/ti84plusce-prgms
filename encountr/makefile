@@ -3,7 +3,7 @@
 # ----------------------------
 
 NAME := ENCOUNTR
-ICON := icon-16.png
+#ICON := icon-16.png
 DESCRIPTION := "D&D Encounter Tools"
 COMPRESSED := NO
 ARCHIVED := YES
