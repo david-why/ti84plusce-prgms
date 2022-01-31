@@ -12,7 +12,7 @@
 static uint8_t foreground = 0, background = 255;
 static uint8_t fgbak, bgbak, cbak;
 
-/*static*/ const gfx_sprite_t *bgsprite;
+static const gfx_sprite_t *bgsprite;
 
 static sk_key_t getk()
 {
