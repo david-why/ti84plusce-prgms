@@ -1,0 +1,20 @@
+palettes:
+  - name: palette
+    images: automatic
+    fixed-entries:
+      - color: {index: 0, r: 0, g: 0, b: 0, exact: true}
+      - color: {index: 255, r: 255, g: 255, b: 255, exact: true}
+
+converts:
+  - name: images
+    palette: palette
+    images:
+      - image.png
+
+outputs:
+  - type: c
+    include-file: gfx.h
+    converts:
+      - images
+    palettes:
+      - palette
