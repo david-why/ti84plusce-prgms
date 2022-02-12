@@ -1,0 +1,2 @@
+# wordsrch
+A wordsearch solver.
