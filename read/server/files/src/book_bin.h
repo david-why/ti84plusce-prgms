@@ -29,8 +29,10 @@ uint8_t data[] = {
 #include "data.h"
 };
 
-#define init_book() true
+#define init_book(...) true
 #define deinit_book()
+#define n_books() (1)
+#define get_names() (NULL)
 uint8_t get_height()
 {
     return data[0];

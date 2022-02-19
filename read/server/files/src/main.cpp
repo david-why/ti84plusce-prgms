@@ -5,7 +5,7 @@ typedef int int24_t;
 
 #include <tice.h>
 #include <graphx.h>
-#include "book_fat_files.h"
+#include "book_bin.h"
 #include "nummenu.hpp"
 
 uint8_t buffer[8 * 16 + 2];
