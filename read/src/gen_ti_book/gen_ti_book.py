@@ -99,7 +99,7 @@ while lines:
 
     print('book', text_book, 'size', len(text), 'symbols', len(se), '+', len(sc), '=', sym, 'lines', sp, '(', si, ') pages', sp // row)
 
-    font = ImageFont.truetype('IBM3161.ttf', 16)
+    font = ImageFont.truetype('font.ttf', 16)
     ti = open(ti_book + '.' + ('tib' if memlimit == 0 else ('%03d' % si)), 'wb')
     si += 1
 
