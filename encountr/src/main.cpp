@@ -241,6 +241,8 @@ void create()
 
 void delcur()
 {
+    if (!n)
+        return;
     memmove(items + sel, items + sel + 1, (--n - sel) * sizeof(items[0]));
     if (sel >= n)
         sel = n - 1;
@@ -278,12 +280,12 @@ int main()
                 sel = n;
             sel--;
             break;
-        case sk_Left:
+        case sk_Right:
             cur++;
             if (cur >= n)
                 cur = 0;
             break;
-        case sk_Right:
+        case sk_Left:
             if (!n)
                 cur = 1;
             else if (cur == 0)

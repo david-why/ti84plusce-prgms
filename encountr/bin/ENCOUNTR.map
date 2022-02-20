@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A94A D1A94A             0h
 .init            D1A94A D1A976            2Ch
 .fini            D1A976 D1A9AA            34h
-.text            D1A9AA D1B831           E87h
-.data            D1B831 D1B841            10h
-.rodata          D1B841 D1BA76           235h
+.text            D1A9AA D1B833           E89h
+.data            D1B833 D1B843            10h
+.rodata          D1B843 D1BA78           235h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -33,7 +33,7 @@ _os_GetStringInput         = D1A9AA
 _os_DisableHomeTextBuffer  = D1AA94
 _os_EnableHomeTextBuffer   = D1AAA6
 _random                    = D1AAB8
-__state                    = D1B831
+__state                    = D1B833
 _boot_ClearVRAM            = 000374
 _os_ClrLCD                 = 02080C
 _os_HomeUp                 = 020828
@@ -54,10 +54,10 @@ _memcpy                    = 0000A4
 _memmove                   = 0000A8
 ___sprintf                 = 0000BC
 _strcpy                    = 0000CC
-.missingappvar             = D1B841
-.libloadname               = D1B846
+.missingappvar             = D1B843
+.libloadname               = D1B848
 .libloadnamelen            = 000007
-.webaddress                = D1B84E
+.webaddress                = D1B850
 __start                    = D1A94A
 ___exithl                  = D1A976
 skip._exit                 = D1A976
@@ -73,37 +73,37 @@ __Z9disptitlePKc           = D1AEA1
 __Z6dosortv                = D1AED5
 __Z4edithbb                = D1B00B
 __Z8getinputIsET_S0_       = D1B198
-LJTI7_0                    = D1B863
+LJTI7_0                    = D1B865
 __Z8getinputIaET_S0_       = D1B297
-LJTI8_0                    = D1B8B7
+LJTI8_0                    = D1B8B9
 __Z8getinputIhET_S0_       = D1B370
-LJTI9_0                    = D1B90B
+LJTI9_0                    = D1B90D
 __Z6createv                = D1B445
 __Z6delcurv                = D1B65A
-_main                      = D1B6C8
-LJTI12_0                   = D1B95F
-__Z6sk2inth                = D1B809
+_main                      = D1B6CA
+LJTI12_0                   = D1B961
+__Z6sk2inth                = D1B80B
 _sel                       = D052C6
 _n                         = D052C7
 _d                         = D052C8
 _cur                       = D052C9
 _items                     = D052CA
-L_.str                     = D1B98C
-L_.str.1                   = D1B995
-L_.str.2                   = D1B997
-L_.str.3                   = D1B999
-L_.str.4                   = D1B99E
-L_.str.5                   = D1B9A6
-L_.str.6                   = D1B9AC
-L_.str.7                   = D1B9B7
-L_.str.8                   = D1B9C3
-L_.str.9                   = D1B9E4
-L_.str.10                  = D1B9ED
-L_.str.11                  = D1BA02
-L_.str.12                  = D1BA26
-L_.str.13                  = D1BA3A
-L_.str.14                  = D1BA5E
-L_switch.table._Z6sk2inth  = D1BA63
+L_.str                     = D1B98E
+L_.str.1                   = D1B997
+L_.str.2                   = D1B999
+L_.str.3                   = D1B99B
+L_.str.4                   = D1B9A0
+L_.str.5                   = D1B9A8
+L_.str.6                   = D1B9AE
+L_.str.7                   = D1B9B9
+L_.str.8                   = D1B9C5
+L_.str.9                   = D1B9E6
+L_.str.10                  = D1B9EF
+L_.str.11                  = D1BA04
+L_.str.12                  = D1BA28
+L_.str.13                  = D1BA3C
+L_.str.14                  = D1BA60
+L_switch.table._Z6sk2inth  = D1BA65
 _#gfx_Begin                = D1A8FC
 _#gfx_End                  = D1A900
 _#gfx_SetColor             = D1A904
