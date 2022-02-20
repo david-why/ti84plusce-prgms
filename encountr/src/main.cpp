@@ -180,11 +180,11 @@ void edit(uint8_t i, bool create = false, bool forceroll = false)
     disptitle("HP: ");
     items[i].hp = getinput(items[i].hp);
     boot_ClearVRAM();
-    disptitle("Init. Mod:");
-    items[i].initmod = getinput(items[i].initmod);
-    boot_ClearVRAM();
-    if (!create)
+    if (create)
     {
+        disptitle("Init. Mod:");
+        items[i].initmod = getinput(items[i].initmod);
+        boot_ClearVRAM();
         if (!forceroll)
         {
             disptitle("Roll init.?");
@@ -241,7 +241,7 @@ void create()
 
 void delcur()
 {
-    memmove(items + sel, items + sel + 1, --n - sel);
+    memmove(items + sel, items + sel + 1, (--n - sel) * sizeof(items[0]));
     if (sel >= n)
         sel = n - 1;
 }
