@@ -1,22 +1,8 @@
-# ----------------------------
-# Makefile Options
-# ----------------------------
+SRCS=$(wildcard *.bin)
+BINS=$(SRCS:.bin=.8xv)
+SHELL=bash
 
-NAME := HNGMANKW
-ICON := icon-16.png
-DESCRIPTION := "Generate Keywords for HANGMAN"
-COMPRESSED := NO
-ARCHIVED := YES
+%.8xv: %.bin
+	export BASENAME="$(basename $<)"; convbin -j bin -i $< -o $@ -k 8xv -n $${BASENAME^^}
 
-HAS_PRINTF := NO
-
-CFLAGS := -Wall -Wextra -Oz
-CXXFLAGS := -Wall -Wextra -Oz
-
-# ----------------------------
-
-ifndef CEDEV
-$(error CEDEV environment path variable is not set)
-endif
-
-include $(CEDEV)/meta/makefile.mk
+all: ${BINS}
