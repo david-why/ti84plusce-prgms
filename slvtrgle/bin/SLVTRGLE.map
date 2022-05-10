@@ -1,0 +1,130 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A898            16h
+.init.libs       D1A898 D1A8F0            58h
+.libs            D1A8F0 D1A902            12h
+.init.clock      D1A902 D1A902             0h
+.init.reruncheck D1A902 D1A902             0h
+.init            D1A902 D1A92C            2Ah
+.fini            D1A92C D1A960            34h
+.text            D1A960 D1DE91          3531h
+.data            D1DE91 D1DE94             3h
+.rodata          D1DE94 D1DF03            6Fh
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D052EC D13FD8     26h
+.header          D1A87F D1A882             3h
+
+Label                                                                                                                                                                          Value
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------   ------
+___low_bss                                                                                                                                                                   = D052C6
+___len_bss                                                                                                                                                                   = 000026
+___heaptop                                                                                                                                                                   = D13FD8
+___heapbot                                                                                                                                                                   = D052EC
+___libs                                                                                                                                                                      = D1A8F0
+___init_array_count                                                                                                                                                          = 000000
+___ctors_count                                                                                                                                                               = 000000
+___dtors_count                                                                                                                                                               = 000000
+___fini_array_count                                                                                                                                                          = 000000
+__stack                                                                                                                                                                      = D1A87E
+_os_GetStringInput                                                                                                                                                           = D1A960
+_os_DisableHomeTextBuffer                                                                                                                                                    = D1AA4A
+_os_EnableHomeTextBuffer                                                                                                                                                     = D1AA5C
+_os_NewLine                                                                                                                                                                  = 0207F0
+_os_ClrLCD                                                                                                                                                                   = 02080C
+_os_HomeUp                                                                                                                                                                   = 020828
+_os_DrawStatusBar                                                                                                                                                            = 021A3C
+_os_RealAsinRad                                                                                                                                                              = 021C88
+_os_RealAcosRad                                                                                                                                                              = 021C8C
+_os_RealAdd                                                                                                                                                                  = 021C94
+_os_RealCompare                                                                                                                                                              = 021C9C
+_os_RealCosRad                                                                                                                                                               = 021CA0
+_os_RealRadToDeg                                                                                                                                                             = 021CA4
+_os_RealDiv                                                                                                                                                                  = 021CA8
+_os_RealToStr                                                                                                                                                                = 021CB4
+_os_RealMul                                                                                                                                                                  = 021CD4
+_os_RealDegToRad                                                                                                                                                             = 021CE8
+_os_RealSinRad                                                                                                                                                               = 021CFC
+_os_RealSqrt                                                                                                                                                                 = 021D00
+_os_RealSub                                                                                                                                                                  = 021D04
+_os_StrToReal                                                                                                                                                                = 021D0C
+_os_TestFlagBits                                                                                                                                                             = 021D1C
+_os_PutStrFull                                                                                                                                                               = 021D2C
+_os_GetKey                                                                                                                                                                   = 021D38
+_os_GetAnsData                                                                                                                                                               = 021E70
+_os_Int24ToReal                                                                                                                                                              = 021EF8
+_malloc                                                                                                                                                                      = D1AA6E
+__alloc_base                                                                                                                                                                 = D052C6
+__frameset                                                                                                                                                                   = D1AB0D
+__frameset0                                                                                                                                                                  = D1AB1B
+_memset                                                                                                                                                                      = D1AB26
+_outchar                                                                                                                                                                     = D1AB3D
+_puts                                                                                                                                                                        = D1AB53
+_sbrk                                                                                                                                                                        = D1AB6F
+__sbrkbase                                                                                                                                                                   = D1DE91
+__setflag                                                                                                                                                                    = 000218
+_memcpy                                                                                                                                                                      = 0000A4
+.missingappvar                                                                                                                                                               = D1DE94
+.libloadname                                                                                                                                                                 = D1DE99
+.libloadnamelen                                                                                                                                                              = 000007
+.webaddress                                                                                                                                                                  = D1DEA1
+__start                                                                                                                                                                      = D1A902
+___exithl                                                                                                                                                                    = D1A92C
+skip._exit                                                                                                                                                                   = D1A92C
+skip.__Exit                                                                                                                                                                  = D1A92C
+skip._abort                                                                                                                                                                  = D1A92C
+_exit.sp                                                                                                                                                                     = D1A92D
+_exit.flash_wait_states                                                                                                                                                      = D1A937
+__Z5isdegv                                                                                                                                                                   = D1AB8D
+__Z5toradRK6real_t                                                                                                                                                           = D1AB98
+__Z5todegRK6real_t                                                                                                                                                           = D1ABCE
+__Z5printRKN2ti4realE                                                                                                                                                        = D1AC04
+__Z3asaRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                          = D1AC37
+__ZNK2ti4realmiERKS0_                                                                                                                                                        = D1AD9D
+__ZNK2ti4realleERKS0_                                                                                                                                                        = D1ADE3
+__ZNK2ti4realmlERKS0_                                                                                                                                                        = D1ADFB
+__ZNK2ti4real3sinEv                                                                                                                                                          = D1AE41
+__ZNK2ti4realdvERKS0_                                                                                                                                                        = D1AE76
+__Z3aasRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                          = D1AEBC
+__Z3sssRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                          = D1AF68
+__ZNK2ti4realplERKS0_                                                                                                                                                        = D1B3DE
+__ZNK2ti4real4asinEv                                                                                                                                                         = D1B424
+__Z3sasRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                          = D1B459
+__ZNK2ti4real3cosEv                                                                                                                                                          = D1B58E
+__ZNK2ti4real4sqrtEv                                                                                                                                                         = D1B5C3
+__Z3ssaRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                          = D1B5F8
+__ZNK2ti4realgtERKS0_                                                                                                                                                        = D1BB91
+__ZNK2ti4realeqERKS0_                                                                                                                                                        = D1BBBB
+__ZNK2ti4real4acosEv                                                                                                                                                         = D1BBDC
+__ZNK2ti4realgeERKS0_                                                                                                                                                        = D1BC11
+__Z5solveRN2ti4realES1_S1_S1_S1_S1_S1_S1_S1_S1_S1_S1_                                                                                                                        = D1BC29
+__Z10input_realPKc                                                                                                                                                           = D1CE2D
+_main                                                                                                                                                                        = D1CE6A
+__ZN2ti4realmIERKS0_                                                                                                                                                         = D1DD7F
+__ZN2ti4realmLERKS0_                                                                                                                                                         = D1DDB9
+__ZN2ti4realdVERKS0_                                                                                                                                                         = D1DDF3
+__ZN2ti4realpLERKS0_                                                                                                                                                         = D1DE2D
+__ZNK2ti4realltERKS0_                                                                                                                                                        = D1DE67
+__ZZ5printRKN2ti4realEE3buf                                                                                                                                                  = D052CC
+__ZZ10input_realPKcE3buf                                                                                                                                                     = D052DC
+L_.str.3                                                                                                                                                                     = D1DEB6
+L_.str.4                                                                                                                                                                     = D1DEB9
+L_.str.5                                                                                                                                                                     = D1DEBC
+L_.str.6                                                                                                                                                                     = D1DEBF
+L_.str.7                                                                                                                                                                     = D1DEC2
+L_.str.8                                                                                                                                                                     = D1DEC5
+L_.str.9                                                                                                                                                                     = D1DEC8
+L_.str.10                                                                                                                                                                    = D1DECB
+L_.str.11                                                                                                                                                                    = D1DECE
+L_.str.12                                                                                                                                                                    = D1DED1
+L_.str.13                                                                                                                                                                    = D1DED4
+L_.str.14                                                                                                                                                                    = D1DED7
+L_.str.15                                                                                                                                                                    = D1DEDA
+L_.str.16                                                                                                                                                                    = D1DEE3
+L_.str.17                                                                                                                                                                    = D1DEEE
+__ZN2ti8__detail5parseILNS_4real4signE0ENS0_6parserIJLc51ELc46ELc49ELc52ELc49ELc53ELc57ELc50ELc54ELc53ELc51ELc53ELc56ELc57ELc56EEEEJLx14ELx12ELx10ELx8ELx6ELx4ELx2EEE5valueE = D1DEF1
+__ZN2ti8__detail5parseILNS_4real4signE0ENS0_6parserIJLc49ELc46ELc53ELc55ELc48ELc55ELc57ELc54ELc51ELc50ELc54ELc55ELc57ELc52ELc57EEEEJLx14ELx12ELx10ELx8ELx6ELx4ELx2EEE5valueE = D1DEFA
+_#ti_SetVar                                                                                                                                                                  = D1A8FA
+_#ti_AllocList                                                                                                                                                               = D1A8FE
