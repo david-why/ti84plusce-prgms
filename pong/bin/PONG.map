@@ -1,0 +1,87 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A893            11h
+.init.libs       D1A893 D1A8EB            58h
+.libs            D1A8EB D1A92D            42h
+.init.clock      D1A92D D1A92D             0h
+.init.reruncheck D1A92D D1A92D             0h
+.init            D1A92D D1A959            2Ch
+.fini            D1A959 D1A98D            34h
+.text            D1A98D D1AE31           4A4h
+.data            D1AE31 D1AE31             0h
+.rodata          D1AE31 D1AE95            64h
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D05801 D13FD8    53Bh
+.header          D1A87F D1A882             3h
+
+Label                             Value
+-------------------------------   ------
+___low_bss                      = D052C6
+___len_bss                      = 00053B
+___heaptop                      = D13FD8
+___heapbot                      = D05801
+___libs                         = D1A8EB
+___init_array_count             = 000000
+___ctors_count                  = 000000
+___dtors_count                  = 000000
+___fini_array_count             = 000000
+__stack                         = D1A87E
+_os_DisableHomeTextBuffer       = D1A98D
+_os_EnableHomeTextBuffer        = D1A99F
+_os_RealToStr                   = 021CB4
+_os_PutStrFull                  = 021D2C
+_os_GetKey                      = 021D38
+_os_GetCSC                      = 021D3C
+_os_Int24ToReal                 = 021EF8
+_os_ClrLCD                      = 02080C
+_os_HomeUp                      = 020828
+_os_DrawStatusBar               = 021A3C
+__frameset                      = D1A9B1
+__frameset0                     = D1A9BF
+__indcallhl                     = D1A9CA
+_outchar                        = D1A9CB
+_puts                           = D1A9E1
+__iand                          = 000134
+__imulu                         = 000158
+__lcmpu                         = 0001AC
+__lsub                          = 0001F8
+__setflag                       = 000218
+.missingappvar                  = D1AE31
+.libloadname                    = D1AE36
+.libloadnamelen                 = 000007
+.webaddress                     = D1AE3E
+__start                         = D1A92D
+___exithl                       = D1A959
+skip._exit                      = D1A959
+skip.__Exit                     = D1A959
+skip._abort                     = D1A959
+_exit.sp                        = D1A95A
+_exit.flash_wait_states         = D1A964
+_con_Init                       = D1A9FD
+_handle_usb_event               = D1AA89
+_con_HandleEvents               = D1AB94
+_con_Deinit                     = D1AC24
+_con_Read                       = D1AC2E
+_con_EmitEvent                  = D1AC59
+_con_RegisterCallback           = D1ACBB
+_putint                         = D1ACE7
+_handle_event                   = D1AD2F
+_main                           = D1AD85
+L_.str                          = D1AE53
+_con                            = D052C6
+L_.str.1                        = D1AE6C
+L_.str.2                        = D1AE7C
+_#usb_Init                      = D1A8F6
+_#usb_Cleanup                   = D1A8FA
+_#usb_HandleEvents              = D1A8FE
+_#usb_FindDevice                = D1A902
+_#usb_ResetDevice               = D1A906
+_#srl_Open                      = D1A915
+_#srl_Close                     = D1A919
+_#srl_Read                      = D1A91D
+_#srl_Write                     = D1A921
+_#srl_GetCDCStandardDescriptors = D1A925
+_#srl_UsbEventCallback          = D1A929

@@ -1,0 +1,160 @@
+#include <tice.h>
+#ifndef HAS_PRINTF
+#define HAS_PRINTF
+#endif
+#include <stdio.h>
+
+#include <srldrvce.h>
+#include <keypadc.h>
+#include <string.h>
+
+srl_device_t srl;
+
+bool has_srl_device = false;
+
+uint8_t srl_buf[512];
+
+static usb_error_t handle_usb_event(usb_event_t event, void *event_data,
+                                    usb_callback_data_t *callback_data)
+{
+    usb_error_t err;
+    /* Delegate to srl USB callback */
+    if ((err = srl_UsbEventCallback(event, event_data, callback_data)) != USB_SUCCESS)
+        return err;
+    /* Enable newly connected devices */
+    if (event == USB_DEVICE_CONNECTED_EVENT /* && !(usb_GetRole() & USB_ROLE_DEVICE)*/)
+    {
+        usb_device_t device = event_data;
+        printf("connect r=%d\n", usb_GetRole());
+        usb_ResetDevice(device);
+    }
+
+    /* Call srl_Open on newly enabled device, if there is not currently a serial device in use */
+    if (event == USB_HOST_CONFIGURE_EVENT || event == USB_DEVICE_ENABLED_EVENT /*|| (event == USB_DEVICE_ENABLED_EVENT && !(usb_GetRole() & USB_ROLE_DEVICE))*/)
+    {
+
+        /* If we already have a serial device, ignore the new one */
+        if (has_srl_device)
+            return USB_SUCCESS;
+
+        usb_device_t device = NULL;
+        // if (event == USB_HOST_CONFIGURE_EVENT)
+        // {
+        // /* Use the device representing the USB host. */
+        // device = usb_FindDevice(NULL, NULL, USB_SKIP_HUBS);
+        // if (device == NULL)
+        //     return USB_SUCCESS;
+        // }
+        // else
+        // {
+        //     /* Use the newly enabled device */
+        //     device = event_data;
+        // }
+
+        while ((device = usb_FindDevice(NULL, device, USB_SKIP_HUBS)))
+        {
+            printf("evdat=%x dev=%x\n", event_data, device);
+            printf("ev=%d r=%d f=%d srl_Init\n", event, usb_GetRole(), usb_GetDeviceFlags(device));
+
+            /* Initialize the serial library with the newly attached device */
+            srl_error_t error = srl_Open(&srl, device, srl_buf, sizeof srl_buf, SRL_INTERFACE_ANY, 115200);
+            if (error)
+            {
+                /* Print the error code to the homescreen */
+                printf("srl_Init -> %d (%d)\n", error, srl.type);
+                if (srl.type != 0)
+                    goto init_srl;
+                continue;
+            }
+        init_srl:
+            printf("serial initialized (%d)\n", srl.type);
+
+            has_srl_device = true;
+            break;
+        }
+        return USB_SUCCESS;
+    }
+
+    if (event == USB_DEVICE_DISCONNECTED_EVENT)
+    {
+        usb_device_t device = event_data;
+        if (device == srl.dev && has_srl_device)
+        {
+            printf("disconnect\n");
+            srl_Close(&srl);
+            memset(&srl, 0, sizeof(srl));
+            has_srl_device = false;
+        }
+    }
+
+    return USB_SUCCESS;
+}
+
+char buffer[256];
+
+int main()
+{
+    os_ClrHome();
+    const usb_standard_descriptors_t *desc = srl_GetCDCStandardDescriptors();
+    /* Initialize the USB driver with our event handler and the serial device descriptors */
+    usb_error_t usb_error = usb_Init(handle_usb_event, NULL, desc, USB_DEFAULT_INIT_FLAGS);
+    if (usb_error)
+    {
+        usb_Cleanup();
+        printf("usb init error %u\n", usb_error);
+        do
+            kb_Scan();
+        while (!kb_IsDown(kb_KeyClear));
+        return 1;
+    }
+
+    do
+    {
+        kb_Scan();
+
+        usb_HandleEvents();
+
+        if (has_srl_device)
+        {
+            int val = 0;
+            bool run = 1;
+            while (1)
+            {
+                usb_HandleEvents();
+                if (!has_srl_device) break;
+                kb_Scan();
+                if (srl_Read(&srl, buffer, 1))
+                    switch (buffer[0])
+                    {
+                    case 'A':
+                        val++;
+                        break;
+                    case 'S':
+                        val--;
+                        break;
+                    case 'Q':
+                        run = 0;
+                        break;
+                    }
+                if (kb_IsDown(kb_KeyUp))
+                    val++, srl_Write(&srl, "A", 1);
+                if (kb_IsDown(kb_KeyDown))
+                    val--, srl_Write(&srl, "S", 1);
+                if (kb_IsDown(kb_KeyClear))
+                    run = 0, srl_Write(&srl, "Q", 1);
+                if (run == 0)
+                    goto after_loop;
+                os_HomeUp();
+                real_t r = os_Int24ToReal(val);
+                os_RealToStr(buffer, &r, 0, 0, 0);
+                os_PutStrLine(buffer);
+                os_PutStrLine("                         ");
+            }
+        }
+
+    } while (!kb_IsDown(kb_KeyClear));
+
+after_loop:
+    usb_Cleanup();
+    return 0;
+}
